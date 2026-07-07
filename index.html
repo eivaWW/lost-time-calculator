@@ -40,6 +40,11 @@
   .out .v.warn { color:#E5484D; }
   .foot { font-size:12px; color:#7a879b; margin-top:22px; line-height:1.6; }
   .foot b { color:#43536b; }
+  .foot a { color:#2D5BFF; font-weight:700; text-decoration:none; }
+  .chip { display:inline-block; background:#EEF3FF; border:1px solid #d7e0f2; color:#2a3a50;
+          border-radius:20px; padding:7px 13px; font-size:13.5px; font-weight:600; }
+  .out.soft { grid-column:1 / -1; border-style:dashed; border-color:#c7d4ec; background:#fbfcff; }
+  .chips { display:flex; flex-wrap:wrap; gap:9px; margin-top:12px; }
   @media (max-width:560px){ .grid{grid-template-columns:1fr;} .out.hero .v{font-size:44px;} h1{font-size:24px;} }
 </style>
 </head>
@@ -115,6 +120,16 @@
       <div class="v" id="oSaving">–</div>
       <div class="sub" id="oSavingSub"></div>
     </div>
+    <div class="out soft">
+      <div class="k" data-et="Ja see, mida arv ei näita" data-en="And what the number can't show">Ja see, mida arv ei näita</div>
+      <div class="chips">
+        <span class="chip" data-et="Stress ja läbipõlemine" data-en="Stress &amp; burnout">Stress ja läbipõlemine</span>
+        <span class="chip" data-et="Tegemata jäänud töö" data-en="Work left undone">Tegemata jäänud töö</span>
+        <span class="chip" data-et="Hirm valesti teha" data-en="Fear of getting it wrong">Hirm valesti teha</span>
+        <span class="chip" data-et="Bürokraatia, kui protsess pole selge" data-en="Bureaucracy when the process is unclear">Bürokraatia, kui protsess pole selge</span>
+      </div>
+      <div class="sub" style="margin-top:14px;" data-et="Neid on raske eurodesse panna — aga mõõtmata jätmine ei võta kulu ära." data-en="Hard to put in euros — but unmeasured isn't unpaid.">Neid on raske eurodesse panna — aga mõõtmata jätmine ei võta kulu ära.</div>
+    </div>
   </div>
 
   <details style="margin-top:20px; background:#fff; border:1px solid #e2e9f6; border-radius:16px; padding:14px 22px;">
@@ -133,7 +148,8 @@
   <p class="foot">
     <span data-et="Allikas: McKinsey Global Institute — infotöötaja kulutab ~1,8 h päevas (~20% nädalast) info otsimisele ja kogumisele. Väline andmeallikas, kontrolli enne pakkumises kasutamist."
           data-en="Source: McKinsey Global Institute — information workers spend ~1.8 h/day (~20% of the week) searching for and gathering information. External figure; verify before using in a proposal.">
-    </span><br>
+    </span>
+    <a href="https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/the-social-economy" target="_blank" rel="noopener">McKinsey — The social economy (2012) ↗</a><br>
     <b data-et="Näidisarvutus" data-en="Illustrative model">Näidisarvutus</b>
     <span data-et=" — mitte kliendi tegelik tulemus. Lisaks tulevad stress, risk ja edasi lükatud otsused, mida on raske mõõta: mõõtmata jätmine ei võta kulu ära."
           data-en=" — not an actual client result. On top of this come stress, risk and delayed decisions that are hard to measure: unmeasured isn't unpaid.">
