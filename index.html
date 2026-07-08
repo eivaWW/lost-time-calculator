@@ -55,8 +55,8 @@
       <div class="brand">Webware</div>
       <h1 data-et="Mida kaotatud aeg maksab?" data-en="What does lost time cost?">Mida kaotatud aeg maksab?</h1>
       <p class="lede"
-         data-et="McKinsey andmetel kulub keskmisel infotöötajal ~20% tööajast (ligi üks päev nädalas) info otsimisele ja kogumisele. Pane sisse oma numbrid ja vaata, mida see maksab — ja mida tähendaks kas või väikese osa tagasivõitmine."
-         data-en="McKinsey finds the average information worker spends ~20% of the week (nearly one day) searching for and gathering information. Put in your own numbers to see what that costs — and what recovering even a small share is worth.">
+         data-et="Uuringute põhjal kulub infotöötajal 20–30% tööajast (kuni päev nädalas) info otsimisele ja kogumisele. Pane sisse oma numbrid ja vaata, mida see maksab — ja mida tähendaks kas või väikese osa tagasivõitmine."
+         data-en="Research puts the time an information worker spends searching for and gathering information at 20–30% of the week (up to a day). Put in your own numbers to see what that costs — and what reclaiming even a small share is worth.">
       </p>
     </div>
     <div class="lang">
@@ -71,18 +71,14 @@
       <input type="number" id="emp" value="400" min="1" step="1">
     </div>
     <div class="field">
-      <label data-et="Keskmine brutopalk kuus (€)" data-en="Average gross monthly salary (€)">Keskmine brutopalk kuus (€)</label>
+      <label data-et="Keskmine brutopalk kuus (€)" data-en="Average gross monthly salary (€)">Keskmine brutopalk kuus (€)
+        <span class="hint" data-et="Tööandja maksud (~34%, Eesti) liidetakse automaatselt." data-en="Employer taxes (~34%, Estonia) are added automatically.">+ tööandja maksud (~34%)</span>
+      </label>
       <input type="number" id="gross" value="2600" min="0" step="50">
     </div>
     <div class="field">
-      <label data-et="Tööjõukulu kordaja (koos maksudega)" data-en="Employer-cost multiplier (incl. taxes)">Tööjõukulu kordaja (koos maksudega)
-        <span class="hint" data-et="Eestis ~1,34 (sotsiaalmaks + töötuskindlustus)" data-en="Estonia ~1.34 (social tax + unemployment insurance)">Eestis ~1,34</span>
-      </label>
-      <input type="number" id="mult" value="1.338" min="1" step="0.001">
-    </div>
-    <div class="field">
       <label data-et="Aeg, mis kulub info otsimisele" data-en="Time spent searching for information">Aeg, mis kulub info otsimisele
-        <span class="hint" data-et="McKinsey lähtekoht: ~20% tööajast" data-en="McKinsey baseline: ~20% of the workweek">McKinsey: ~20%</span>
+        <span class="hint" data-et="Uuringud: McKinsey ~20%, IDC/Forrester ~30%" data-en="Research: McKinsey ~20%, IDC/Forrester ~30%">~20–30%</span>
       </label>
       <div class="rangewrap">
         <input type="range" id="search" value="19.8" min="5" max="30" step="0.2">
@@ -90,12 +86,12 @@
       </div>
     </div>
     <div class="field">
-      <label data-et="Kui palju sellest realistlikult tagasi võita" data-en="How much of it you could realistically recover">Kui palju sellest realistlikult tagasi võita
-        <span class="hint" data-et="Konservatiivne hinnang — Webware aitab selle tagasi tuua" data-en="Conservative estimate — Webware helps you win it back">konservatiivne</span>
+      <label data-et="Kui suure osa otsimisajast tagasi võita" data-en="How much of the lost search time you win back">Kui suure osa otsimisajast tagasi võita
+        <span class="hint" data-et="Konservatiivne — tõesta pilootprojektiga" data-en="Conservative — prove it with a pilot">konservatiivne</span>
       </label>
       <div class="rangewrap">
-        <input type="range" id="recover" value="1" min="0.5" max="10" step="0.5">
-        <span class="rangeval" id="recoverVal">1,0%</span>
+        <input type="range" id="recover" value="5" min="5" max="50" step="5">
+        <span class="rangeval" id="recoverVal">5%</span>
       </div>
     </div>
   </div>
@@ -111,12 +107,12 @@
       <div class="sub" id="oHoursSub"></div>
     </div>
     <div class="out">
-      <div class="k" data-et="Otsimise hind täna (aastas)" data-en="Cost of searching today (per year)">Otsimise hind täna (aastas)</div>
+      <div class="k" data-et="Otsimisele kuluva aja väärtus (aastas)" data-en="Value of time spent searching (per year)">Otsimisele kuluva aja väärtus (aastas)</div>
       <div class="v warn" id="oSearchCost">–</div>
-      <div class="sub" data-et="Kaotatud tööaja väärtus — McKinsey põhjal" data-en="Value of lost working time — based on McKinsey">Kaotatud tööaja väärtus — McKinsey põhjal</div>
+      <div class="sub" data-et="Kaotatud tööaja väärtus — uuringute põhjal (20–30%)" data-en="Value of lost working time — per research (20–30%)">Kaotatud tööaja väärtus — uuringute põhjal (20–30%)</div>
     </div>
     <div class="out hero">
-      <div class="k" data-et="Võimalik sääst aastas" data-en="Potential saving per year">Võimalik sääst aastas</div>
+      <div class="k" data-et="Tagasivõidetava aja väärtus (aastas)" data-en="Value of time reclaimed (per year)">Tagasivõidetava aja väärtus (aastas)</div>
       <div class="v" id="oSaving">–</div>
       <div class="sub" id="oSavingSub"></div>
     </div>
@@ -135,25 +131,26 @@
   <details style="margin-top:20px; background:#fff; border:1px solid #e2e9f6; border-radius:16px; padding:14px 22px;">
     <summary style="cursor:pointer; font-weight:800; color:#2D5BFF; font-size:15px;" data-et="Kust see number tuleb?" data-en="Where does this number come from?">Kust see number tuleb?</summary>
     <div style="font-size:13.5px; color:#43536b; margin-top:12px;">
-      <p data-et="Lähtekoht on uuring, mitte teie number. McKinsey järgi kulub infotöötajal ~20% ajast otsimisele — kasutage seda alguspunktina ja asendage oma andmetega." data-en="The starting point is research, not your number. McKinsey finds ~20% of time goes to searching — use it as an anchor and replace it with your own data."></p>
+      <p data-et="Lähtekoht on uuring, mitte teie number. Uuringud näitavad 20–30% (McKinsey ~20%, IDC/Forrester ~30%) — kasutage seda alguspunktina ja asendage oma andmetega." data-en="The starting point is research, not your number. Studies show 20–30% (McKinsey ~20%, IDC/Forrester ~30%) — use it as an anchor and replace it with your own data."></p>
       <p style="margin-top:10px; font-weight:700; color:#0E1A2B;" data-et="Kuidas oma numbrit teada saada:" data-en="How to find your own number:"></p>
       <p style="margin-top:6px;" data-et="&bull; Lühiküsitlus: mitu tundi nädalas kulub dokumendi või õige versiooni otsimisele?" data-en="&bull; A short survey: how many hours a week do you spend finding a document or the right version?"></p>
       <p style="margin-top:4px;" data-et="&bull; Ajapäevik ühe nädala jooksul mõne vabatahtlikuga." data-en="&bull; A one-week time diary with a few volunteers."></p>
       <p style="margin-top:4px;" data-et="&bull; Ajastatud test: leia viimane allkirjastatud versioon — ja mõõda aeg." data-en="&bull; A timed test: find the last signed version — and time it."></p>
       <p style="margin-top:4px;" data-et="&bull; Töötuba: joonista ühe dokumendi teekond ja loe kokku puudutused ja ooteajad." data-en="&bull; A workshop: map one document's journey and count the touches and waiting time."></p>
-      <p style="margin-top:10px;" data-et="Kui palju tagasi võita: mitte kõike. Vaikimisi on siin konservatiivne 1%. Tegeliku osa saab teada ainult mõõtes — enne/pärast pilootprojektiga." data-en="How much you can win back: not all of it. The default here is a conservative 1%. The real share is only known by measuring — a before/after pilot."></p>
+      <p style="margin-top:10px;" data-et="Kui palju tagasi võita: mitte kõike. Vaikimisi on siin konservatiivne osa otsimisajast. Tegeliku osa saab teada ainult mõõtes — enne/pärast pilootprojektiga." data-en="How much you can win back: not all of it. The default here is a conservative slice of the search time. The real share is only known by measuring — a before/after pilot."></p>
     </div>
   </details>
 
   <p class="foot">
-    <span data-et="Allikas: McKinsey Global Institute — infotöötaja kulutab ~1,8 h päevas (~20% nädalast) info otsimisele ja kogumisele. Väline andmeallikas, kontrolli enne pakkumises kasutamist."
-          data-en="Source: McKinsey Global Institute — information workers spend ~1.8 h/day (~20% of the week) searching for and gathering information. External figure; verify before using in a proposal.">
-    </span>
-    <a href="https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/the-social-economy" target="_blank" rel="noopener">McKinsey — The social economy (2012) ↗</a><br>
+    <span data-et="Numbrid on suunanäitajad, mitte teie ettevõtte mõõdetud tulemus. Uuringud: McKinsey ~20%, IDC ja Forrester ~30% tööajast kulub info otsimisele. Kontrolli ja asenda oma andmetega."
+          data-en="These figures are directional, not your company's measured result. Research: McKinsey ~20%, IDC and Forrester ~30% of time goes to searching. Verify and replace with your own data."></span><br>
+    <b data-et="Loe lähemalt:" data-en="Read more:">Loe lähemalt:</b>
+    <a href="https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/the-social-economy" target="_blank" rel="noopener">McKinsey (2012) &#8599;</a> &middot;
+    <a href="https://www.cdpinstitute.org/news/knowledge-workers-lose-30-of-time-looking-for-data-forrester-study/" target="_blank" rel="noopener">Forrester &#8599;</a> &middot;
+    <a href="https://m-files.com/resources/en-hub/rt-main-blog-en/how-long-does-it-actually-take-to-find-a-document-dissecting-the-many-stats-out-there" target="_blank" rel="noopener" data-et="statistika ülevaade &#8599;" data-en="overview of the stats &#8599;">overview of the stats &#8599;</a><br>
     <b data-et="Näidisarvutus" data-en="Illustrative model">Näidisarvutus</b>
     <span data-et=" — mitte kliendi tegelik tulemus. Lisaks tulevad stress, risk ja edasi lükatud otsused, mida on raske mõõta: mõõtmata jätmine ei võta kulu ära."
-          data-en=" — not an actual client result. On top of this come stress, risk and delayed decisions that are hard to measure: unmeasured isn't unpaid.">
-    </span>
+          data-en=" — not an actual client result. On top of this come stress, risk and delayed decisions that are hard to measure: unmeasured isn't unpaid."></span>
   </p>
 </div>
 
@@ -168,11 +165,11 @@
   function num(id){ var v=parseFloat(document.getElementById(id).value); return isNaN(v)?0:v; }
 
   function calc(){
-    var emp=num('emp'), gross=num('gross'), mult=num('mult'),
+    var emp=num('emp'), gross=num('gross'), mult=1.338, // Estonia: social tax 33% + unemployment 0.8%
         search=num('search'), recover=num('recover');
     var annualLabor = emp*gross*12*mult;
     var searchCost = annualLabor*search/100;
-    var saving = annualLabor*recover/100;
+    var saving = searchCost*recover/100;
     var hoursWeek = 40*search/100;
     var daysWeek = hoursWeek/8;
 
@@ -188,9 +185,10 @@
     document.getElementById('oHoursSub').textContent = (lang==='et'
       ? '≈ ' + dTxt + ' päeva nädalas, inimese kohta' : '≈ ' + dTxt + ' days/week, per person');
     document.getElementById('oSavingSub').textContent = (lang==='et'
-      ? 'kui võidad tagasi ' + fmtPct(recover) + ' tööajast' : 'recovering ' + fmtPct(recover) + ' of working time');
+      ? fmtPct(recover) + ' otsimisajast tagasi · realiseerub aja ümbersuunamise või palkamata jätmisega'
+      : fmtPct(recover) + ' of search time won back · realised by redeploying time or avoiding hires');
 
-    try { localStorage.setItem('ww_calc', JSON.stringify({emp:emp,gross:gross,mult:mult,search:search,recover:recover,lang:lang})); } catch(e){}
+    try { localStorage.setItem('ww_calc', JSON.stringify({emp:emp,gross:gross,search:search,recover:recover,lang:lang})); } catch(e){}
   }
 
   function setLang(l){
@@ -208,14 +206,14 @@
   try {
     var saved = JSON.parse(localStorage.getItem('ww_calc'));
     if(saved){
-      ['emp','gross','mult','search','recover'].forEach(function(k){
+      ['emp','gross','search','recover'].forEach(function(k){
         if(saved[k]!=null) document.getElementById(k).value=saved[k];
       });
       if(saved.lang) lang=saved.lang;
     }
   } catch(e){}
 
-  ['emp','gross','mult','search','recover'].forEach(function(id){
+  ['emp','gross','search','recover'].forEach(function(id){
     document.getElementById(id).addEventListener('input', calc);
   });
   setLang(lang);
