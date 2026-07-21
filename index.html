@@ -3,192 +3,273 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Webware · Kaotatud aja kalkulaator</title>
+<title>Webware · Kus raha lekib?</title>
 <style>
   :root { color-scheme: light; }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family:'Helvetica Neue',Arial,sans-serif; background:#EEF3FF; color:#0E1A2B;
-         padding:28px 20px 40px; line-height:1.5; }
-  .wrap { max-width:820px; margin:0 auto; }
+         padding:28px 20px 44px; line-height:1.5; }
+  .wrap { max-width:860px; margin:0 auto; }
   .top { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; }
   .brand { font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#2D5BFF; font-weight:800; }
-  h1 { font-size:30px; font-weight:800; letter-spacing:-.01em; margin-top:6px; }
-  .lede { font-size:15px; color:#43536b; margin-top:8px; max-width:640px; }
+  h1 { font-size:32px; font-weight:800; letter-spacing:-.015em; margin-top:6px; }
+  .lede { font-size:15px; color:#43536b; margin-top:8px; max-width:660px; }
   .lang { display:flex; gap:4px; }
   .lang button { border:1px solid #cdd9ee; background:#fff; color:#2a3a50; font-weight:700;
     border-radius:8px; padding:6px 12px; cursor:pointer; font-size:13px; }
   .lang button.active { background:#2D5BFF; color:#fff; border-color:#2D5BFF; }
   .card { background:#fff; border:1px solid #e2e9f6; border-radius:16px; padding:22px 24px; margin-top:20px; }
-  .field { margin-bottom:18px; }
-  .field:last-child { margin-bottom:0; }
-  label { display:block; font-size:14px; font-weight:700; margin-bottom:7px; }
-  label .hint { display:block; font-weight:400; font-size:12px; color:#7a879b; margin-top:2px; }
+  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .field label { display:block; font-size:14px; font-weight:700; margin-bottom:7px; }
+  .field .hint { display:block; font-weight:400; font-size:12px; color:#7a879b; margin-top:3px; }
   input[type=number] { width:100%; font-size:20px; font-weight:700; color:#0E1A2B; padding:10px 12px;
     border:1px solid #cdd9ee; border-radius:10px; background:#fbfcff; }
-  .rangewrap { display:flex; align-items:center; gap:14px; }
-  input[type=range] { flex:1; accent-color:#2D5BFF; height:6px; }
-  .rangeval { font-size:20px; font-weight:800; color:#2D5BFF; min-width:76px; text-align:right; }
-  .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px; }
-  .out { background:#fff; border:1px solid #e2e9f6; border-radius:16px; padding:20px 22px; }
-  .out.hero { background:#2D5BFF; color:#fff; border-color:#2D5BFF; grid-column:1 / -1; }
-  .out .k { font-size:13px; font-weight:700; color:#5a6b84; text-transform:uppercase; letter-spacing:.06em; }
-  .out.hero .k { color:#cfe0ff; }
-  .out .v { font-size:40px; font-weight:800; letter-spacing:-.02em; margin-top:6px; line-height:1; }
-  .out.hero .v { font-size:54px; }
-  .out .sub { font-size:13px; color:#6b7a90; margin-top:8px; }
-  .out.hero .sub { color:#dbe6ff; }
-  .out .v.warn { color:#E5484D; }
-  .foot { font-size:12px; color:#7a879b; margin-top:22px; line-height:1.6; }
-  .foot b { color:#43536b; }
-  .foot a { color:#2D5BFF; font-weight:700; text-decoration:none; }
-  .chip { display:inline-block; background:#EEF3FF; border:1px solid #d7e0f2; color:#2a3a50;
-          border-radius:20px; padding:7px 13px; font-size:13.5px; font-weight:600; }
-  .out.soft { grid-column:1 / -1; border-style:dashed; border-color:#c7d4ec; background:#fbfcff; }
-  .chips { display:flex; flex-wrap:wrap; gap:9px; margin-top:12px; }
-  @media (max-width:560px){ .grid{grid-template-columns:1fr;} .out.hero .v{font-size:44px;} h1{font-size:24px;} }
+  .seg { display:flex; gap:6px; }
+  .seg button { flex:1; border:1px solid #cdd9ee; background:#fff; color:#2a3a50; font-weight:700;
+    padding:9px 6px; border-radius:10px; cursor:pointer; font-size:13.5px; line-height:1.25; }
+  .seg button small { display:block; font-weight:500; font-size:11px; color:#8a97ac; }
+  .seg button.active { background:#2D5BFF; color:#fff; border-color:#2D5BFF; }
+  .seg button.active small { color:#cfe0ff; }
+  .fieldfull { margin-top:18px; }
+  /* headline results */
+  .heads { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px; }
+  .head { border-radius:16px; padding:20px 22px; }
+  .head.loss { background:#FFF1F1; border:1px solid #f7cdcd; }
+  .head.win  { background:#2D5BFF; color:#fff; }
+  .head .k { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
+  .head.loss .k { color:#b23b3b; }
+  .head.win .k { color:#cfe0ff; }
+  .head .v { font-size:44px; font-weight:800; letter-spacing:-.02em; line-height:1; margin-top:7px; }
+  .head.loss .v { color:#E5484D; }
+  .head .sub { font-size:12.5px; margin-top:8px; }
+  .head.loss .sub { color:#9a6767; }
+  .head.win .sub { color:#dbe6ff; }
+  /* week strip (time, not money) */
+  .week { background:#fff; border:1px solid #e2e9f6; border-radius:16px; padding:18px 22px; margin-top:14px; }
+  .week .k { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#5a6b84; }
+  .weekbar { display:flex; gap:5px; height:34px; margin-top:12px; }
+  .weekbar span { flex:1; background:#eef1f7; border-radius:6px; }
+  .week .big { font-size:22px; font-weight:800; color:#0E1A2B; margin-top:14px; }
+  .week .big span { color:#E5484D; }
+  .legend { display:flex; gap:18px; flex-wrap:wrap; margin-top:12px; font-size:12.5px; color:#5a6b84; }
+  .legend i.sw { display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:middle; margin-right:5px; }
+  .legend .red { background:#E5484D; } .legend .green { background:#1E9E6A; }
+  .playnote { font-size:15px; font-weight:700; color:#0E1A2B; margin-top:22px; }
+  /* math box */
+  .math { background:#fbfcff; border:1px dashed #c7d4ec; border-radius:14px; padding:16px 20px; margin-top:16px; }
+  .math .h { font-size:14px; font-weight:800; color:#2D5BFF; }
+  .math .line { font-size:13.5px; color:#3d4d63; margin-top:9px; }
+  .math .line b { color:#0E1A2B; }
+  /* soft / hidden */
+  .soft { border:1px dashed #c7d4ec; border-radius:14px; padding:16px 20px; margin-top:16px; background:#fff; }
+  .soft .h { font-size:14px; font-weight:800; color:#5a6b84; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:11px; }
+  .chip { display:inline-block; border-radius:20px; padding:6px 12px; font-size:13px; font-weight:600; }
+  .chip.human { background:#EEF3FF; border:1px solid #d7e0f2; color:#2a3a50; }
+  .chip.risk { background:#FFF1F1; border:1px solid #f7cdcd; color:#a63a3a; }
+  .soft .note { font-size:12.5px; color:#7a879b; margin-top:11px; }
+  .foot { font-size:12px; color:#7a879b; margin-top:20px; line-height:1.7; }
+  .foot b { color:#43536b; } .foot a { color:#2D5BFF; font-weight:700; text-decoration:none; }
+  .week .winline { font-size:14px; font-weight:700; color:#1E7a4f; margin-top:8px; }
+  .ba { width:100%; border-collapse:collapse; margin-top:12px; }
+  .ba th { text-align:left; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; padding:0 10px 8px; }
+  .ba th.before { color:#a63a3a; } .ba th.after { color:#1E7a4f; }
+  .ba td { padding:9px 10px; font-size:13px; vertical-align:top; border-top:1px solid #eef1f7; line-height:1.4; }
+  .ba td.before { color:#6b7a90; width:48%; }
+  .ba td.after { color:#14663f; width:52%; background:#f2faf6; }
+  .ba td.after::before { content:"\2713  "; color:#1E9E6A; font-weight:800; }
+  @media (max-width:600px){ .row2,.heads{grid-template-columns:1fr;} h1{font-size:25px;} .head .v{font-size:36px;} .ba td,.ba th{font-size:12px;padding:7px 8px;} }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top">
-    <div>
-      <div class="brand">Webware</div>
-      <h1 data-et="Mida kaotatud aeg maksab?" data-en="What does lost time cost?">Mida kaotatud aeg maksab?</h1>
-      <p class="lede"
-         data-et="Uuringute põhjal kulub infotöötajal 20–30% tööajast (kuni päev nädalas) info otsimisele ja kogumisele. Pane sisse oma numbrid ja vaata, mida see maksab — ja mida tähendaks kas või väikese osa tagasivõitmine."
-         data-en="Research puts the time an information worker spends searching for and gathering information at 20–30% of the week (up to a day). Put in your own numbers to see what that costs — and what reclaiming even a small share is worth.">
-      </p>
-    </div>
+    <div class="brand">Webware</div>
     <div class="lang">
       <button id="btEt" class="active" onclick="setLang('et')">ET</button>
       <button id="btEn" onclick="setLang('en')">EN</button>
     </div>
   </div>
+  <h1 data-et="Kulu, mis jääb tihti nähtamatuks, kuna puudutab protsesse." data-en="A cost that often stays invisible — because it's about processes.">Kulu, mis jääb tihti nähtamatuks, kuna puudutab protsesse.</h1>
+  <p class="lede"
+     data-et="Uuringute põhjal kulub töötajal 20–30% tööajast (kuni päev nädalas) info otsimisele, kinnitamisele või taasloomisele."
+     data-en="Research shows employees spend 20–30% of the week (up to a day) searching for, approving or re-creating information.">
+  </p>
 
+  <p class="playnote" data-et="Mängi oma ettevõtte andmetega, et näha info haldamisega seotud kulu." data-en="Play with your company's numbers to see the cost tied to managing information.">Mängi oma ettevõtte andmetega, et näha info haldamisega seotud kulu.</p>
+
+  <!-- INPUTS -->
   <div class="card">
-    <div class="field">
-      <label data-et="Töötajate arv" data-en="Number of employees">Töötajate arv</label>
-      <input type="number" id="emp" value="400" min="1" step="1">
-    </div>
-    <div class="field">
-      <label data-et="Keskmine brutopalk kuus (€)" data-en="Average gross monthly salary (€)">Keskmine brutopalk kuus (€)
-        <span class="hint" data-et="Tööandja maksud (~34%, Eesti) liidetakse automaatselt." data-en="Employer taxes (~34%, Estonia) are added automatically.">+ tööandja maksud (~34%)</span>
-      </label>
-      <input type="number" id="gross" value="2600" min="0" step="50">
-    </div>
-    <div class="field">
-      <label data-et="Aeg, mis kulub info otsimisele" data-en="Time spent searching for information">Aeg, mis kulub info otsimisele
-        <span class="hint" data-et="Uuringud: McKinsey ~20%, IDC/Forrester ~30%" data-en="Research: McKinsey ~20%, IDC/Forrester ~30%">~20–30%</span>
-      </label>
-      <div class="rangewrap">
-        <input type="range" id="search" value="19.8" min="5" max="30" step="0.2">
-        <span class="rangeval" id="searchVal">19,8%</span>
+    <div class="row2">
+      <div class="field">
+        <label data-et="Töötajate arv" data-en="Number of employees">Töötajate arv</label>
+        <input type="number" id="emp" value="400" min="1" step="1">
+      </div>
+      <div class="field">
+        <label><span data-et="Keskmine brutopalk kuus (€)" data-en="Average gross monthly salary (€)">Keskmine brutopalk kuus (€)</span>
+          <span class="hint" data-et="Tööandja maksud (~34%, Eesti) liidetakse automaatselt." data-en="Employer taxes (~34%, Estonia) are added automatically.">+ tööandja maksud (~34%)</span>
+        </label>
+        <input type="number" id="gross" value="2600" min="0" step="50">
       </div>
     </div>
-    <div class="field">
-      <label data-et="Kui suure osa otsimisajast tagasi võita" data-en="How much of the lost search time you win back">Kui suure osa otsimisajast tagasi võita
-        <span class="hint" data-et="Konservatiivne — tõesta pilootprojektiga" data-en="Conservative — prove it with a pilot">konservatiivne</span>
+
+    <div class="fieldfull field">
+      <label><span data-et="Info otsimisele kuluv aeg" data-en="Time spent searching for information">Info otsimisele kuluv aeg</span>
+        <span class="hint" data-et="Uuringute põhjal: McKinsey ~20%, IDC/Forrester ~30%" data-en="Based on research: McKinsey ~20%, IDC/Forrester ~30%">Uuringute põhjal: McKinsey ~20%, IDC/Forrester ~30%</span>
       </label>
-      <div class="rangewrap">
-        <input type="range" id="recover" value="5" min="5" max="50" step="5">
-        <span class="rangeval" id="recoverVal">5%</span>
+      <div class="seg" id="segSearch">
+        <button data-val="20" class="active">20%</button>
+        <button data-val="25">25%</button>
+        <button data-val="30">30%</button>
+      </div>
+    </div>
+
+    <div class="fieldfull field">
+      <label><span data-et="Eeldatav võit parematest protsessidest Webware'iga." data-en="Expected gain from better processes with Webware.">Eeldatav võit parematest protsessidest Webware'iga.</span>
+        <span class="hint" data-et="Eeldus meie tänaste klientide põhjal. Lõpliku numbri saame pilootprojektis." data-en="An assumption based on our current clients. The final number comes from a pilot.">Eeldus meie tänaste klientide põhjal. Lõpliku numbri saame pilootprojektis.</span>
+      </label>
+      <div class="seg" id="segRecover">
+        <button data-val="5" class="active" data-et="Konservatiivne<small>5% otsimisajast</small>" data-en="Conservative<small>5% of search time</small>">Konservatiivne<small>5% otsimisajast</small></button>
+        <button data-val="15" data-et="Keskmine<small>15%</small>" data-en="Average<small>15%</small>">Keskmine<small>15%</small></button>
+        <button data-val="30" data-et="Optimistlik<small>30%</small>" data-en="Optimistic<small>30%</small>">Optimistlik<small>30%</small></button>
       </div>
     </div>
   </div>
 
-  <div class="grid">
-    <div class="out">
-      <div class="k" data-et="Aastane tööjõukulu" data-en="Annual labour cost">Aastane tööjõukulu</div>
-      <div class="v" id="oLabor">–</div>
+  <!-- HEADLINE NUMBERS -->
+  <div class="heads">
+    <div class="head loss">
+      <div class="k" data-et="Tänane rahaline ja ajaline kulu info otsimisele" data-en="Today's money and time spent searching for information">Tänane rahaline ja ajaline kulu info otsimisele</div>
+      <div class="v" id="oLost">–</div>
+      <div class="sub" id="oLostSub"></div>
     </div>
-    <div class="out">
-      <div class="k" data-et="Otsimisele kuluv aeg / inimene" data-en="Searching time / person">Otsimisele kuluv aeg / inimene</div>
-      <div class="v" id="oHours">–</div>
-      <div class="sub" id="oHoursSub"></div>
-    </div>
-    <div class="out">
-      <div class="k" data-et="Otsimisele kuluva aja väärtus (aastas)" data-en="Value of time spent searching (per year)">Otsimisele kuluva aja väärtus (aastas)</div>
-      <div class="v warn" id="oSearchCost">–</div>
-      <div class="sub" data-et="Kaotatud tööaja väärtus — uuringute põhjal (20–30%)" data-en="Value of lost working time — per research (20–30%)">Kaotatud tööaja väärtus — uuringute põhjal (20–30%)</div>
-    </div>
-    <div class="out hero">
-      <div class="k" data-et="Tagasivõidetava aja väärtus (aastas)" data-en="Value of time reclaimed (per year)">Tagasivõidetava aja väärtus (aastas)</div>
-      <div class="v" id="oSaving">–</div>
-      <div class="sub" id="oSavingSub"></div>
-    </div>
-    <div class="out soft">
-      <div class="k" data-et="Ja see, mida arv ei näita" data-en="And what the number can't show">Ja see, mida arv ei näita</div>
-      <div class="chips">
-        <span class="chip" data-et="Stress ja läbipõlemine" data-en="Stress &amp; burnout">Stress ja läbipõlemine</span>
-        <span class="chip" data-et="Tegemata jäänud töö" data-en="Work left undone">Tegemata jäänud töö</span>
-        <span class="chip" data-et="Hirm valesti teha" data-en="Fear of getting it wrong">Hirm valesti teha</span>
-        <span class="chip" data-et="Bürokraatia, kui protsess pole selge" data-en="Bureaucracy when the process is unclear">Bürokraatia, kui protsess pole selge</span>
-      </div>
-      <div class="sub" style="margin-top:14px;" data-et="Neid on raske eurodesse panna — aga mõõtmata jätmine ei võta kulu ära." data-en="Hard to put in euros — but unmeasured isn't unpaid.">Neid on raske eurodesse panna — aga mõõtmata jätmine ei võta kulu ära.</div>
+    <div class="head win">
+      <div class="k" data-et="Rahaline võit infohalduse protsesside parendusest" data-en="The money gain from improving information-management processes">Rahaline võit infohalduse protsesside parendusest</div>
+      <div class="v" id="oWin">–</div>
+      <div class="sub" id="oWinSub"></div>
     </div>
   </div>
 
-  <details style="margin-top:20px; background:#fff; border:1px solid #e2e9f6; border-radius:16px; padding:14px 22px;">
-    <summary style="cursor:pointer; font-weight:800; color:#2D5BFF; font-size:15px;" data-et="Kust see number tuleb?" data-en="Where does this number come from?">Kust see number tuleb?</summary>
-    <div style="font-size:13.5px; color:#43536b; margin-top:12px;">
-      <p data-et="Lähtekoht on uuring, mitte teie number. Uuringud näitavad 20–30% (McKinsey ~20%, IDC/Forrester ~30%) — kasutage seda alguspunktina ja asendage oma andmetega." data-en="The starting point is research, not your number. Studies show 20–30% (McKinsey ~20%, IDC/Forrester ~30%) — use it as an anchor and replace it with your own data."></p>
-      <p style="margin-top:10px; font-weight:700; color:#0E1A2B;" data-et="Kuidas oma numbrit teada saada:" data-en="How to find your own number:"></p>
-      <p style="margin-top:6px;" data-et="&bull; Lühiküsitlus: mitu tundi nädalas kulub dokumendi või õige versiooni otsimisele?" data-en="&bull; A short survey: how many hours a week do you spend finding a document or the right version?"></p>
-      <p style="margin-top:4px;" data-et="&bull; Ajapäevik ühe nädala jooksul mõne vabatahtlikuga." data-en="&bull; A one-week time diary with a few volunteers."></p>
-      <p style="margin-top:4px;" data-et="&bull; Ajastatud test: leia viimane allkirjastatud versioon — ja mõõda aeg." data-en="&bull; A timed test: find the last signed version — and time it."></p>
-      <p style="margin-top:4px;" data-et="&bull; Töötuba: joonista ühe dokumendi teekond ja loe kokku puudutused ja ooteajad." data-en="&bull; A workshop: map one document's journey and count the touches and waiting time."></p>
-      <p style="margin-top:10px;" data-et="Kui palju tagasi võita: mitte kõike. Vaikimisi on siin konservatiivne osa otsimisajast. Tegeliku osa saab teada ainult mõõtes — enne/pärast pilootprojektiga." data-en="How much you can win back: not all of it. The default here is a conservative slice of the search time. The real share is only known by measuring — a before/after pilot."></p>
+  <!-- WEEK STRIP -->
+  <div class="week">
+    <div class="k" data-et="Teeme visuaalseks: vaatame töönädalat." data-en="Let's make it visual: look at the working week.">Teeme visuaalseks: vaatame töönädalat.</div>
+    <div class="weekbar" id="weekBar">
+      <span></span><span></span><span></span><span></span><span></span>
     </div>
-  </details>
+    <div class="big" id="weekBig"></div>
+    <div class="winline" id="weekWinLine"></div>
+    <div class="legend">
+      <span><i class="sw red"></i><span data-et="Ebaefektiivsetele protsessidele kuluv aeg" data-en="Time lost to inefficient processes">Ebaefektiivsetele protsessidele kuluv aeg</span></span>
+      <span><i class="sw green"></i><span data-et="Webware'iga tagasi võidetav aeg" data-en="Time reclaimable with Webware">Webware'iga tagasi võidetav aeg</span></span>
+    </div>
+  </div>
+
+  <!-- HIDDEN / RISK (before the math) -->
+  <div class="soft">
+    <div class="h" data-et="Kehva infohalduse probleemid, mida kulunumber samuti kohe ei näita, kuid hea süsteem aitab lahendada." data-en="Problems of poor information management the cost number doesn't immediately show either — but a good system solves.">Kehva infohalduse probleemid, mida kulunumber samuti kohe ei näita, kuid hea süsteem aitab lahendada.</div>
+    <table class="ba">
+      <thead><tr>
+        <th class="before" data-et="Täna — kehv infohaldus" data-en="Today — poor information management">Täna — kehv infohaldus</th>
+        <th class="after" data-et="Hea süsteemiga" data-en="With a good system">Hea süsteemiga</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="before" data-et="Administratiivne stress" data-en="Administrative stress">Administratiivne stress</td><td class="after" data-et="Info on ühes kohas ja alati leitav" data-en="Information in one place, always findable">Info on ühes kohas ja alati leitav</td></tr>
+        <tr><td class="before" data-et="Mõttetu töö asemel tegemata jäänud töö" data-en="Real work left undone because of busywork">Mõttetu töö asemel tegemata jäänud töö</td><td class="after" data-et="Aeg läheb õigetele tegevustele" data-en="Time goes to the right actions">Aeg läheb õigetele tegevustele</td></tr>
+        <tr><td class="before" data-et="Vastavus- ja auditirisk" data-en="Compliance &amp; audit risk">Vastavus- ja auditirisk</td><td class="after" data-et="Kõik toimingud on alati auditeeritavad" data-en="Every action is always audit-ready">Kõik toimingud on alati auditeeritavad</td></tr>
+        <tr><td class="before" data-et="Andmelekked — tundlik info vales kohas" data-en="Data leaks — sensitive info in the wrong place">Andmelekked — tundlik info vales kohas</td><td class="after" data-et="Info püsib ühes põhisüsteemis" data-en="Information stays in one master system">Info püsib ühes põhisüsteemis</td></tr>
+        <tr><td class="before" data-et="Otsused vale dokumendiversiooni põhjal" data-en="Decisions based on the wrong document version">Otsused vale dokumendiversiooni põhjal</td><td class="after" data-et="Alati kättesaadav uusim versioon" data-en="Always the newest version available">Alati kättesaadav uusim versioon</td></tr>
+      </tbody>
+    </table>
+    <div class="note" data-et="Neid on raske eurodesse panna — aga mõõtmata jätmine ei võta kulu ära." data-en="Hard to put in euros — but unmeasured isn't unpaid.">Neid on raske eurodesse panna — aga mõõtmata jätmine ei võta kulu ära.</div>
+  </div>
+
+  <!-- THE MATH (general formulas) -->
+  <div class="math">
+    <div class="h" data-et="Kuidas need numbrid tekivad" data-en="How these numbers are built">Kuidas need numbrid tekivad</div>
+    <div class="line" data-et="<b>Aastane tööjõukulu</b> = töötajate arv × keskmine brutopalk × 12 × 1,34 (koos tööandja maksudega)" data-en="<b>Annual labour cost</b> = employees × average gross salary × 12 × 1.34 (incl. employer taxes)"></div>
+    <div class="line" data-et="<b>Info otsimisele kuluv aeg</b> = 40 h nädalas × otsimise osakaal" data-en="<b>Search time</b> = 40 h/week × the search share"></div>
+    <div class="line" data-et="<b>Tänane kulu</b> = aastane tööjõukulu × otsimise osakaal" data-en="<b>Today's cost</b> = annual labour cost × the search share"></div>
+    <div class="line" data-et="<b>Rahaline võit</b> = tänane kulu × parenduse osakaal" data-en="<b>Money gain</b> = today's cost × the improvement share"></div>
+  </div>
 
   <p class="foot">
-    <span data-et="Numbrid on suunanäitajad, mitte teie ettevõtte mõõdetud tulemus. Uuringud: McKinsey ~20%, IDC ja Forrester ~30% tööajast kulub info otsimisele. Kontrolli ja asenda oma andmetega."
-          data-en="These figures are directional, not your company's measured result. Research: McKinsey ~20%, IDC and Forrester ~30% of time goes to searching. Verify and replace with your own data."></span><br>
+    <span data-et="Numbrid on suunanäitajad, mitte teie ettevõtte mõõdetud tulemus. Kontrolli ja asenda oma andmetega." data-en="These figures are directional, not your company's measured result. Verify and replace with your own data."></span><br>
     <b data-et="Loe lähemalt:" data-en="Read more:">Loe lähemalt:</b>
     <a href="https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/the-social-economy" target="_blank" rel="noopener">McKinsey (2012) &#8599;</a> &middot;
-    <a href="https://www.cdpinstitute.org/news/knowledge-workers-lose-30-of-time-looking-for-data-forrester-study/" target="_blank" rel="noopener">Forrester &#8599;</a> &middot;
-    <a href="https://m-files.com/resources/en-hub/rt-main-blog-en/how-long-does-it-actually-take-to-find-a-document-dissecting-the-many-stats-out-there" target="_blank" rel="noopener" data-et="statistika ülevaade &#8599;" data-en="overview of the stats &#8599;">overview of the stats &#8599;</a><br>
+    <a href="https://www.cdpinstitute.org/news/knowledge-workers-lose-30-of-time-looking-for-data-forrester-study/" target="_blank" rel="noopener">Forrester &#8599;</a><br>
     <b data-et="Näidisarvutus" data-en="Illustrative model">Näidisarvutus</b>
-    <span data-et=" — mitte kliendi tegelik tulemus. Lisaks tulevad stress, risk ja edasi lükatud otsused, mida on raske mõõta: mõõtmata jätmine ei võta kulu ära."
-          data-en=" — not an actual client result. On top of this come stress, risk and delayed decisions that are hard to measure: unmeasured isn't unpaid."></span>
+    <span data-et=" — tagasivõidetav osa on eeldus, mille tegelik suurus selgub pilootprojektiga." data-en=" — the reclaimable share is an assumption; its real size is confirmed by a pilot."></span>
   </p>
 </div>
 
 <script>
-  var lang = 'et';
-  function fmtEur(n){
-    n = Math.round(n);
-    var s = n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    return '€ ' + s;
+  var lang='et';
+  var MULT=1.338; // Estonia: social tax 33% + unemployment 0.8%
+  var search=20, recover=5;
+
+  function grp(n){ return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' '); }
+  function eur(n){
+    if (Math.abs(n) >= 1e6){ var m=(n/1e6).toFixed(1).replace('.', lang==='et'?',':'.'); return lang==='et' ? ('€ '+m+' mln') : ('€'+m+'M'); }
+    return '€ ' + grp(Math.round(n/1000)*1000);
   }
-  function fmtPct(n){ return (Number(n).toFixed(1).replace('.', lang==='et'?',':'.')) + '%'; }
+  function eurExact(n){ return '€ ' + grp(n); }
   function num(id){ var v=parseFloat(document.getElementById(id).value); return isNaN(v)?0:v; }
+  function dec(n){ return n.toFixed(1).replace('.', lang==='et'?',':'.'); }
 
   function calc(){
-    var emp=num('emp'), gross=num('gross'), mult=1.338, // Estonia: social tax 33% + unemployment 0.8%
-        search=num('search'), recover=num('recover');
-    var annualLabor = emp*gross*12*mult;
-    var searchCost = annualLabor*search/100;
-    var saving = searchCost*recover/100;
+    var emp=num('emp'), gross=num('gross');
+    var labor = emp*gross*12*MULT;
+    var lost  = labor*search/100;
+    var win   = lost*recover/100;
     var hoursWeek = 40*search/100;
-    var daysWeek = hoursWeek/8;
 
-    document.getElementById('searchVal').textContent = fmtPct(search);
-    document.getElementById('recoverVal').textContent = fmtPct(recover);
-    document.getElementById('oLabor').textContent = fmtEur(annualLabor);
-    document.getElementById('oSearchCost').textContent = fmtEur(searchCost);
-    document.getElementById('oSaving').textContent = fmtEur(saving);
+    document.getElementById('oLost').textContent = eur(lost);
+    document.getElementById('oWin').textContent  = eur(win);
+    document.getElementById('oLostSub').textContent = (lang==='et'
+      ? '≈ '+dec(hoursWeek)+' h inimese kohta nädalas' : '≈ '+dec(hoursWeek)+' h/person per week');
+    document.getElementById('oWinSub').textContent = (lang==='et'
+      ? 'eeldusel '+recover+'% otsimisajast · vabaneva aja väärtus' : 'assuming '+recover+'% of search time · value of freed capacity');
 
-    var hTxt = hoursWeek.toFixed(1).replace('.', lang==='et'?',':'.');
-    var dTxt = daysWeek.toFixed(1).replace('.', lang==='et'?',':'.');
-    document.getElementById('oHours').textContent = hTxt + (lang==='et'?' h/nädalas':' h/week');
-    document.getElementById('oHoursSub').textContent = (lang==='et'
-      ? '≈ ' + dTxt + ' päeva nädalas, inimese kohta' : '≈ ' + dTxt + ' days/week, per person');
-    document.getElementById('oSavingSub').textContent = (lang==='et'
-      ? fmtPct(recover) + ' otsimisajast tagasi · realiseerub aja ümbersuunamise või palkamata jätmisega'
-      : fmtPct(recover) + ' of search time won back · realised by redeploying time or avoiding hires');
+    // week strip: fill per day cell so days read clearly (red = lost, green = reclaimable slice)
+    var lostDays = 5*search/100;
+    var winDays  = lostDays*recover/100;
+    var cells = document.getElementById('weekBar').children;
+    for (var i=0;i<cells.length;i++){
+      var lf = Math.max(0, Math.min(1, lostDays - i))*100;
+      var gf = Math.max(0, Math.min(1, winDays  - i))*100;
+      cells[i].style.background =
+        'linear-gradient(to right, #1E9E6A 0 '+gf+'%, #E5484D '+gf+'% '+lf+'%, #eef1f7 '+lf+'% 100%)';
+    }
+    document.getElementById('weekBig').innerHTML = (lang==='et'
+      ? '≈ <span>'+dec(lostDays)+' päeva</span> töönädalast kulub infohalduse ebaefektiivsetele protsessidele'
+      : '≈ <span>'+dec(lostDays)+' days</span> of the working week go to inefficient information-management processes');
+    // reclaimable time, as a concrete number
+    var hpw = (40*search/100)*(recover/100);        // hours per person per week
+    var hy  = Math.round(hpw*emp*46/100)*100;        // company hours per year (~46 working weeks)
+    document.getElementById('weekWinLine').innerHTML = (lang==='et'
+      ? 'Webware\'iga tagasi õige töö juurde: ≈ <b>'+dec(hpw)+' h</b> nädalas inimese kohta · ~<b>'+grp(hy)+' h</b> aastas kokku'
+      : 'Back to real work with Webware: ≈ <b>'+dec(hpw)+' h</b> per person per week · ~<b>'+grp(hy)+' h</b> a year in total');
 
     try { localStorage.setItem('ww_calc', JSON.stringify({emp:emp,gross:gross,search:search,recover:recover,lang:lang})); } catch(e){}
+  }
+
+  function wireSeg(id, setter){
+    var box=document.getElementById(id);
+    box.querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click', function(){
+        box.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
+        b.classList.add('active');
+        setter(parseFloat(b.getAttribute('data-val')));
+        calc();
+      });
+    });
+  }
+
+  function setActiveByVal(id, val){
+    var box=document.getElementById(id);
+    box.querySelectorAll('button').forEach(function(b){
+      b.classList.toggle('active', parseFloat(b.getAttribute('data-val'))===val);
+    });
   }
 
   function setLang(l){
@@ -197,25 +278,24 @@
     document.getElementById('btEn').classList.toggle('active', l==='en');
     document.documentElement.lang=l;
     document.querySelectorAll('[data-et]').forEach(function(el){
-      el.textContent = el.getAttribute('data-'+l);
+      el.innerHTML = el.getAttribute('data-'+l);   // innerHTML to keep <small> in seg buttons
     });
     calc();
   }
 
   // restore
   try {
-    var saved = JSON.parse(localStorage.getItem('ww_calc'));
-    if(saved){
-      ['emp','gross','search','recover'].forEach(function(k){
-        if(saved[k]!=null) document.getElementById(k).value=saved[k];
-      });
-      if(saved.lang) lang=saved.lang;
-    }
+    var s=JSON.parse(localStorage.getItem('ww_calc'));
+    if(s){ if(s.emp)document.getElementById('emp').value=s.emp; if(s.gross)document.getElementById('gross').value=s.gross;
+      if(s.search){search=s.search; setActiveByVal('segSearch',search);}
+      if(s.recover){recover=s.recover; setActiveByVal('segRecover',recover);}
+      if(s.lang)lang=s.lang; }
   } catch(e){}
 
-  ['emp','gross','search','recover'].forEach(function(id){
-    document.getElementById(id).addEventListener('input', calc);
-  });
+  document.getElementById('emp').addEventListener('input', calc);
+  document.getElementById('gross').addEventListener('input', calc);
+  wireSeg('segSearch', function(v){ search=v; });
+  wireSeg('segRecover', function(v){ recover=v; });
   setLang(lang);
 </script>
 </body>
