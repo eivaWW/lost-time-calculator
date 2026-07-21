@@ -78,6 +78,20 @@
   .ba td.before { color:#6b7a90; width:48%; }
   .ba td.after { color:#14663f; width:52%; background:#f2faf6; }
   .ba td.after::before { content:"\2713  "; color:#1E9E6A; font-weight:800; }
+  /* process / multiplier */
+  .proc { background:#fff; border:1px solid #e2e9f6; border-radius:16px; padding:18px 22px; margin-top:14px; }
+  .proc .k { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#5a6b84; }
+  .pstats { display:grid; grid-template-columns:repeat(3,1fr); margin-top:16px; text-align:center; }
+  .pstats > div { padding:0 10px; }
+  .pstats > div + div { border-left:1px solid #eef1f7; }
+  .pstats b { display:block; font-size:30px; font-weight:800; color:#2D5BFF; line-height:1; }
+  .pstats span { display:block; font-size:12.5px; color:#5a6b84; margin-top:7px; }
+  .procvis { display:flex; justify-content:center; margin-top:14px; }
+  .proc .note { font-size:12px; color:#8a97ac; margin-top:8px; }
+  .factcard { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;
+    background:#EEF3FF; border:1px solid #d7e0f2; border-radius:12px; padding:13px 16px; margin-top:16px; }
+  .factcard span { font-size:14px; font-weight:700; color:#2a3a50; }
+  .factcard a { font-size:12px; font-weight:700; color:#2D5BFF; text-decoration:none; white-space:nowrap; }
   @media (max-width:600px){ .row2,.heads{grid-template-columns:1fr;} h1{font-size:25px;} .head .v{font-size:36px;} .ba td,.ba th{font-size:12px;padding:7px 8px;} }
 </style>
 </head>
@@ -164,6 +178,52 @@
     </div>
   </div>
 
+  <!-- PROCESS / MULTIPLIER -->
+  <div class="proc">
+    <div class="k" data-et="1 dokument, ca 8 protsessipunkti." data-en="1 document, ~8 process points.">1 dokument, ca 8 protsessipunkti.</div>
+    <div class="note" data-et="Eeldus: ~1,5 dokumenti töötaja kohta kuus, igaüks ~8 puudutust. Muuda oma numbriga." data-en="Assumption: ~1.5 documents per employee per month, each ~8 touches. Adjust for your reality.">Eeldus: ~1,5 dokumenti töötaja kohta kuus, igaüks ~8 puudutust. Muuda oma numbriga.</div>
+    <div class="pstats">
+      <div><b id="pDocs">–</b><span data-et="dokumenti kuus" data-en="documents / month">dokumenti kuus</span></div>
+      <div><b>≈ 8</b><span data-et="protsessipunkti dokumendi kohta" data-en="process points per document">protsessipunkti dokumendi kohta</span></div>
+      <div><b id="pHand">–</b><span data-et="koostoimivat protsessipunkti kuus" data-en="interconnected process points / month">koostoimivat protsessipunkti kuus</span></div>
+    </div>
+    <div class="procvis">
+      <svg viewBox="0 0 480 250" width="100%" style="max-width:460px" role="img" aria-label="one document, many roles">
+        <g stroke="#cdd9ee" stroke-width="2">
+          <line x1="230" y1="120" x2="230" y2="54"/>
+          <line x1="230" y1="120" x2="282" y2="79"/>
+          <line x1="230" y1="120" x2="294" y2="135"/>
+          <line x1="230" y1="120" x2="259" y2="180"/>
+          <line x1="230" y1="120" x2="201" y2="180"/>
+          <line x1="230" y1="120" x2="166" y2="135"/>
+          <line x1="230" y1="120" x2="178" y2="79"/>
+        </g>
+        <g fill="#2D5BFF">
+          <circle cx="230" cy="54" r="5"/><circle cx="282" cy="79" r="5"/><circle cx="294" cy="135" r="5"/>
+          <circle cx="259" cy="180" r="5"/><circle cx="201" cy="180" r="5"/><circle cx="166" cy="135" r="5"/><circle cx="178" cy="79" r="5"/>
+        </g>
+        <g font-size="12.5" font-weight="700" fill="#2a3a50">
+          <text x="230" y="40" text-anchor="middle" data-et="Autor" data-en="Author">Autor</text>
+          <text x="292" y="83" text-anchor="start" data-et="Kinnitaja" data-en="Approver">Kinnitaja</text>
+          <text x="305" y="139" text-anchor="start" data-et="Rahandus" data-en="Finance">Rahandus</text>
+          <text x="270" y="197" text-anchor="start" data-et="Väline partner" data-en="External partner">Väline partner</text>
+          <text x="190" y="197" text-anchor="end" data-et="Audiitor" data-en="Auditor">Audiitor</text>
+          <text x="155" y="139" text-anchor="end" data-et="Reeglid" data-en="Rules">Reeglid</text>
+          <text x="168" y="83" text-anchor="end" data-et="Allkirjastaja" data-en="Signer">Allkirjastaja</text>
+        </g>
+        <circle cx="230" cy="120" r="30" fill="#2D5BFF"/>
+        <rect x="220" y="106" width="20" height="27" rx="3" fill="#fff"/>
+        <rect x="224" y="112" width="12" height="2.2" fill="#c7d4ec"/>
+        <rect x="224" y="117" width="12" height="2.2" fill="#c7d4ec"/>
+        <rect x="224" y="122" width="9" height="2.2" fill="#c7d4ec"/>
+      </svg>
+    </div>
+    <div class="factcard">
+      <span data-et="Üle 80% töötajatest loob dokumendi pigem uuesti, kui otsib olemasolevat." data-en="Over 80% of employees recreate a document rather than search for the existing one.">Üle 80% töötajatest loob dokumendi pigem uuesti, kui otsib olemasolevat.</span>
+      <a href="https://www.armstrongarchives.com/records-management-statistics/" target="_blank" rel="noopener" data-et="allikas ↗" data-en="source ↗">allikas ↗</a>
+    </div>
+  </div>
+
   <!-- HIDDEN / RISK (before the math) -->
   <div class="soft">
     <div class="h" data-et="Kehva infohalduse probleemid, mida kulunumber samuti kohe ei näita, kuid hea süsteem aitab lahendada." data-en="Problems of poor information management the cost number doesn't immediately show either — but a good system solves.">Kehva infohalduse probleemid, mida kulunumber samuti kohe ei näita, kuid hea süsteem aitab lahendada.</div>
@@ -173,11 +233,11 @@
         <th class="after" data-et="Hea süsteemiga" data-en="With a good system">Hea süsteemiga</th>
       </tr></thead>
       <tbody>
-        <tr><td class="before" data-et="Administratiivne stress" data-en="Administrative stress">Administratiivne stress</td><td class="after" data-et="Info on ühes kohas ja alati leitav" data-en="Information in one place, always findable">Info on ühes kohas ja alati leitav</td></tr>
-        <tr><td class="before" data-et="Mõttetu töö asemel tegemata jäänud töö" data-en="Real work left undone because of busywork">Mõttetu töö asemel tegemata jäänud töö</td><td class="after" data-et="Aeg läheb õigetele tegevustele" data-en="Time goes to the right actions">Aeg läheb õigetele tegevustele</td></tr>
-        <tr><td class="before" data-et="Vastavus- ja auditirisk" data-en="Compliance &amp; audit risk">Vastavus- ja auditirisk</td><td class="after" data-et="Kõik toimingud on alati auditeeritavad" data-en="Every action is always audit-ready">Kõik toimingud on alati auditeeritavad</td></tr>
-        <tr><td class="before" data-et="Andmelekked — tundlik info vales kohas" data-en="Data leaks — sensitive info in the wrong place">Andmelekked — tundlik info vales kohas</td><td class="after" data-et="Info püsib ühes põhisüsteemis" data-en="Information stays in one master system">Info püsib ühes põhisüsteemis</td></tr>
-        <tr><td class="before" data-et="Otsused vale dokumendiversiooni põhjal" data-en="Decisions based on the wrong document version">Otsused vale dokumendiversiooni põhjal</td><td class="after" data-et="Alati kättesaadav uusim versioon" data-en="Always the newest version available">Alati kättesaadav uusim versioon</td></tr>
+        <tr><td class="before" data-et="Administratiivne stress" data-en="Administrative stress">Administratiivne stress</td><td class="after" data-et="Üks tõde, alati leitav — „kus see on?" kaob ära" data-en="One source of truth, always findable — “where is it?” disappears">Üks tõde, alati leitav — „kus see on?" kaob ära</td></tr>
+        <tr><td class="before" data-et="Mõttetu töö asemel tegemata jäänud töö" data-en="Real work left undone because of busywork">Mõttetu töö asemel tegemata jäänud töö</td><td class="after" data-et="Aeg läheb otsustele, mitte otsimisele" data-en="Time goes to decisions, not searching">Aeg läheb otsustele, mitte otsimisele</td></tr>
+        <tr><td class="before" data-et="Vastavus- ja auditirisk" data-en="Compliance &amp; audit risk">Vastavus- ja auditirisk</td><td class="after" data-et="Auditiks valmis sekunditega, mitte nädalatega" data-en="Audit-ready in seconds, not weeks">Auditiks valmis sekunditega, mitte nädalatega</td></tr>
+        <tr><td class="before" data-et="Andmelekked — tundlik info vales kohas" data-en="Data leaks — sensitive info in the wrong place">Andmelekked — tundlik info vales kohas</td><td class="after" data-et="Ligipääs rolli järgi — tundlik info ei rända välja" data-en="Role-based access — sensitive info doesn't wander off">Ligipääs rolli järgi — tundlik info ei rända välja</td></tr>
+        <tr><td class="before" data-et="Otsused vale dokumendiversiooni põhjal" data-en="Decisions based on the wrong document version">Otsused vale dokumendiversiooni põhjal</td><td class="after" data-et="Alati üks kehtiv versioon, tervikliku ajalooga" data-en="Always one valid version, with full history">Alati üks kehtiv versioon, tervikliku ajalooga</td></tr>
       </tbody>
     </table>
     <div class="note" data-et="Neid on raske eurodesse panna — aga mõõtmata jätmine ei võta kulu ära." data-en="Hard to put in euros — but unmeasured isn't unpaid.">Neid on raske eurodesse panna — aga mõõtmata jätmine ei võta kulu ära.</div>
@@ -196,7 +256,8 @@
     <span data-et="Numbrid on suunanäitajad, mitte teie ettevõtte mõõdetud tulemus. Kontrolli ja asenda oma andmetega." data-en="These figures are directional, not your company's measured result. Verify and replace with your own data."></span><br>
     <b data-et="Loe lähemalt:" data-en="Read more:">Loe lähemalt:</b>
     <a href="https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/the-social-economy" target="_blank" rel="noopener">McKinsey (2012) &#8599;</a> &middot;
-    <a href="https://www.cdpinstitute.org/news/knowledge-workers-lose-30-of-time-looking-for-data-forrester-study/" target="_blank" rel="noopener">Forrester &#8599;</a><br>
+    <a href="https://www.cdpinstitute.org/news/knowledge-workers-lose-30-of-time-looking-for-data-forrester-study/" target="_blank" rel="noopener">Forrester &#8599;</a> &middot;
+    <a href="https://www.armstrongarchives.com/records-management-statistics/" target="_blank" rel="noopener" data-et="dokumendistatistika &#8599;" data-en="document statistics &#8599;">dokumendistatistika &#8599;</a><br>
     <b data-et="Näidisarvutus" data-en="Illustrative model">Näidisarvutus</b>
     <span data-et=" — tagasivõidetav osa on eeldus, mille tegelik suurus selgub pilootprojektiga." data-en=" — the reclaimable share is an assumption; its real size is confirmed by a pilot."></span>
   </p>
@@ -249,6 +310,12 @@
     document.getElementById('weekWinLine').innerHTML = (lang==='et'
       ? 'Webware\'iga tagasi õige töö juurde: ≈ <b>'+dec(hpw)+' h</b> nädalas inimese kohta · ~<b>'+grp(hy)+' h</b> aastas kokku'
       : 'Back to real work with Webware: ≈ <b>'+dec(hpw)+' h</b> per person per week · ~<b>'+grp(hy)+' h</b> a year in total');
+
+    // process multiplier: one document touches many
+    var docsMonth = Math.round(emp*1.5);
+    var handoffs  = Math.round(docsMonth*8/100)*100;
+    document.getElementById('pDocs').textContent = '≈ '+grp(docsMonth);
+    document.getElementById('pHand').textContent = '≈ '+grp(handoffs);
 
     try { localStorage.setItem('ww_calc', JSON.stringify({emp:emp,gross:gross,search:search,recover:recover,lang:lang})); } catch(e){}
   }
